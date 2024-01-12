@@ -1,0 +1,10 @@
+form action="/cats/edit-cat/{{id}}" method="POST" class="cat-form"
+enctype="application/x-www-form-urlencoded" >
+<h2>Edit Cat</h2>
+<label for="name">Name</label>
+<input type="text" id="name" value="{{name}}" name="name" />
+<label for="description">Description</label>
+<textarea id="description" name="description">{{description}}</textarea>
+<label for="image">Image</label>
+<input type="text" id="image" value="{{imageUrl}}" name="imageUrl" />
+<label for="group">Breed</label>

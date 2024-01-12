@@ -1,0 +1,18 @@
+<form
+  action="/cats/shelter-cat/{{id}}"
+  method="POST"
+  class="cat-form"
+  enctype="application/x-www-form-urlencoded"
+>
+  <h2>Shelter the cat</h2>
+  <img src="{{imageUrl}}" alt="" />
+  <label for="name">Name</label>
+  <input type="text" id="name" value="{{name}}" disabled />
+  <label for="description">Description</label>
+  <textarea id="description" disabled>{{description}}</textarea>
+  <label for="group">Breed</label>
+  <select id="group" disabled>
+    <option value="{{breed}}">{{breed}}</option>
+  </select>
+  <button type="submit">SHELTER THE CAT</button>
+</form>
