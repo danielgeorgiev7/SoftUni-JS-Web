@@ -10,7 +10,17 @@ router.post('/create', (req, res) => {
 
     movieService.create(newMovie);
 
-    res.send('Move should be created');
+    res.redirect('/');
+});
+
+router.get('/details/:movieId', (req, res) => {
+    const movieId = req.params.movieId;
+    const movie = movieService.getOne(movieId);
+
+    movie.ratingArr = new Array(Number(movie.rating)).fill(true);
+
+    res.render('details', movie);
+
 });
 
 module.exports = router;
