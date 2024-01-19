@@ -24,3 +24,13 @@ exports.getOne = (movieId) => {
 
     return movie;
 }
+
+exports.search = ({ title, genre, date }) => {
+    let movieResults = movies.slice();
+
+    if (title) movieResults = movieResults.filter(movie => (movie.title).toLowerCase().includes(title.toLowerCase()));
+    if (genre) movieResults = movieResults.filter(movie => (movie.genre).toLowerCase().includes(genre.toLowerCase()));
+    if (date) movieResults = movieResults.filter(movie => movie.date === date);
+
+    return movieResults;
+}
