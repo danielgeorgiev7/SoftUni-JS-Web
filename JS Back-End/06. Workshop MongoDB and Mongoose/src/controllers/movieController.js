@@ -1,11 +1,11 @@
 const router = require('express').Router();
 const movieService = require('../services/movieService');
 
-router.get('/create', (req, res) => {
+router.get('/movie/create', (req, res) => {
     res.render('create');
 });
 
-router.post('/create', async (req, res) => {
+router.post('/movie/create', async (req, res) => {
     const newMovie = req.body;
 
     try {
