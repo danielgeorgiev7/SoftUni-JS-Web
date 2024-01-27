@@ -33,10 +33,10 @@ const movieSchema = new mongoose.Schema({
     image: {
         type: String,
         required: true,
-        match: /^https?/
+        match: /^https?:\/\//
     }
 });
 
 const Movie = mongoose.model('Movie', movieSchema);
 
-module.exports = Movie;
+module.exports = Movie; 
