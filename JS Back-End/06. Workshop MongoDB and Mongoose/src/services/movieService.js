@@ -9,6 +9,17 @@ exports.getOne = (movieId) => Movie.findById(movieId);
 
 exports.create = (movieData) => Movie.create(movieData);
 
+exports.attach = async (movieId, castId) => {
+    // const movie = await this.getOne(movieId);
+
+    // movie.casts.push(castId);
+
+    // return movie.save();
+
+    return Movie.findByIdAndUpdate(movieId, { $push: { casts: castId } });
+}
+
+
 exports.search = async ({ title, genre, year }) => {
     let movieResults = await Movie.find().lean();
 
