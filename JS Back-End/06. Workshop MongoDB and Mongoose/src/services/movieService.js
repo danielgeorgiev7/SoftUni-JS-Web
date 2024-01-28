@@ -5,7 +5,7 @@ exports.getAll = () => {
     const movies = Movie.find();
     return movies;
 }
-exports.getOne = (movieId) => Movie.findById(movieId);
+exports.getOne = (movieId) => Movie.findById(movieId).populate('casts');
 
 exports.create = (movieData) => Movie.create(movieData);
 
