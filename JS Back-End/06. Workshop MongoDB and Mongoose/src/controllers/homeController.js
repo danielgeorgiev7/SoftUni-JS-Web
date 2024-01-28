@@ -11,9 +11,12 @@ router.get('/about', (req, res) => {
     res.render('about');
 });
 
-router.get('/search', (req, res) => {
-    const movies = movieService.search(req.query);
-    res.render('search', { movies, ...req.query });
+router.get('/search', async (req, res) => {
+    const { title, genre, year } = req.query;
+    console.log(req.query)
+    const movies = await movieService.search(title, genre, year).lean();
+
+    res.render('search', { movies, title, genre, year });
 });
 
 router.all('/404', (req, res) => {

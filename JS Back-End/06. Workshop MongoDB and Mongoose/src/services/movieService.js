@@ -20,12 +20,25 @@ exports.attach = async (movieId, castId) => {
 }
 
 
-exports.search = async ({ title, genre, year }) => {
-    let movieResults = await Movie.find().lean();
+exports.search = (title, genre, year) => {
+    // let movieResults = await Movie.find().lean();
+    let query = {};
 
-    if (title) movieResults = movieResults.filter(movie => (movie.title).toLowerCase().includes(title.toLowerCase()));
-    if (genre) movieResults = movieResults.filter(movie => (movie.genre).toLowerCase().includes(genre.toLowerCase()));
-    if (year) movieResults = movieResults.filter(movie => movie.year === year);
+    if (title) {
+        // movieResults = movieResults.filter(movie => (movie.title).toLowerCase().includes(title.toLowerCase()));
+        query.title = new RegExp(title, 'i');
+    }
 
-    return movieResults;
+    if (genre) {
+        // movieResults = movieResults.filter(movie => (movie.genre).toLowerCase().includes(genre.toLowerCase()));
+        query.genre = genre.toLowerCase();
+    }
+
+    if (year) {
+        // movieResults = movieResults.filter(movie => movie.year === year);
+        query.year = year;
+    }
+
+    // return movieResults;
+    return Movie.find(query);
 }
