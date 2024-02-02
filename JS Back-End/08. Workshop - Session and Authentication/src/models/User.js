@@ -14,10 +14,6 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-const User = mongoose.model('User', userSchema);
-
-module.exports = User;
-
 userSchema.virtual('rePassword')
     .set(function (value) {
         if (value !== this.password) {
@@ -27,6 +23,8 @@ userSchema.virtual('rePassword')
 
 userSchema.pre('save', async function () {
     const hash = await bcrypt.hash(this.password, 12);
-
     this.password = hash;
 });
+
+const User = mongoose.model('User', userSchema);
+module.exports = User;

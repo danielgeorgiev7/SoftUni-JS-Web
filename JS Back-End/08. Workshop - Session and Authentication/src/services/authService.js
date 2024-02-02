@@ -1,8 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('../lib/jwt');
-
-const SECRET = 'cjoaniscqcoiqwkcsmaszxsz'
+const { SECRET } = require('../config/config');
 
 exports.login = async (email, password) => {
     const user = await User.findOne({ email });
@@ -12,6 +11,8 @@ exports.login = async (email, password) => {
     }
 
     const isValid = await bcrypt.compare(password, user.password);
+    console.log(password);
+    console.log(user.password);
 
     if (!isValid) {
         throw new Error('Email and password does not match');
