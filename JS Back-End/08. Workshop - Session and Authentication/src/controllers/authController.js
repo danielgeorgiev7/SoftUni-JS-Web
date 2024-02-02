@@ -18,4 +18,7 @@ router.post('/register', async (req, res) => {
     res.redirect('/auth/login');
 });
 
+router.post('/register', (req, res) => {
+});
+
 module.exports = router;
