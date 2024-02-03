@@ -42,3 +42,7 @@ exports.search = (title, genre, year) => {
     // return movieResults;
     return Movie.find(query);
 }
+
+exports.edit = (movieId, movieData) => Movie.findByIdAndUpdate(movieId, movieData);
+
+exports.delete = (movieId) => Movie.findByIdAndDelete(movieId);
