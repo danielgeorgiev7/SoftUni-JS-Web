@@ -11,8 +11,6 @@ exports.login = async (email, password) => {
     }
 
     const isValid = await bcrypt.compare(password, user.password);
-    console.log(password);
-    console.log(user.password);
 
     if (!isValid) {
         throw new Error('Email and password does not match');
