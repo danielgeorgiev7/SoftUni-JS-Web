@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const { MongooseError } = require('mongoose');
 
 exports.getErrorMessage = (err) => {
     let message = '';
@@ -9,4 +9,4 @@ exports.getErrorMessage = (err) => {
         err.message = message;
     }
     return message;
-}
+};

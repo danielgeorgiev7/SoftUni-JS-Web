@@ -7,16 +7,28 @@
       </h2>
     </div>
 
-    <form action="/create" method="POST" class="createForm">
+    <form action="/movie/create" method="POST" class="createForm">
       <h2>Add Movie</h2>
       <ul class="noBullet">
         <li>
           <label for="title">Title:</label>
-          <input type="text" class="inputFields" id="title" name="title" />
+          <input
+            type="text"
+            class="inputFields"
+            id="title"
+            name="title"
+            value="{{title}}"
+          />
         </li>
         <li>
           <label for="genre">Genre:</label>
-          <input type="text" class="inputFields" id="genre" name="genre" />
+          <input
+            type="text"
+            class="inputFields"
+            id="genre"
+            name="genre"
+            value="{{genre}}"
+          />
         </li>
         <li>
           <label for="director">Director:</label>
@@ -25,15 +37,28 @@
             class="inputFields"
             id="director"
             name="director"
+            value="{{director}}"
           />
         </li>
         <li>
           <label for="year">Year:</label>
-          <input type="number" class="inputFields" id="year" name="year" />
+          <input
+            type="number"
+            class="inputFields"
+            id="year"
+            name="year"
+            value="{{year}}"
+          />
         </li>
         <li>
           <label for="image">Movie Poster:</label>
-          <input type="text" class="inputFields" id="image" name="image" />
+          <input
+            type="text"
+            class="inputFields"
+            id="image"
+            name="image"
+            value="{{image}}"
+          />
         </li>
         <li>
           <label for="image">Rating:</label>
@@ -43,6 +68,7 @@
             class="inputFields"
             id="rating"
             name="rating"
+            value="{{rating}}"
           />
         </li>
         <li>
@@ -51,6 +77,7 @@
             id="description"
             class="inputFields"
             name="description"
+            value="{{description}}"
           ></textarea>
         </li>
         <li id="center-btn">

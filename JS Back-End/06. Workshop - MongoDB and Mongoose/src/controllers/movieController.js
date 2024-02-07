@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const movieService = require('../services/movieService');
 const castService = require('../services/castService');
+const { getErrorMessage } = require('../../../09. Workshop - Validation and Error Handling/src/utils/errorUtils');
 
 router.get('/movie/create', (req, res) => {
     res.render('create');
@@ -13,8 +14,8 @@ router.post('/movie/create', async (req, res) => {
         await movieService.create(newMovie);
     }
     catch (err) {
-        console.log(err.message);
-        res.redirect('/create');
+        const message = getErrorMessage(err);
+        res.render('create', { error: message });
     }
 
     res.redirect('/');
