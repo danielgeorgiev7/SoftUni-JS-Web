@@ -5,21 +5,27 @@ const movieSchema = new mongoose.Schema({
         type: String,
         required: true,
         lowercase: true,
+        minLength: [5, 'Title should be at least 5 characters'],
+        match: /^[a-zA-Z0-9]+$/,
     },
     genre: {
         type: String,
         required: true,
         lowercase: true,
+        minLength: [5, 'Genre should be at least 5 characters'],
+        match: /^[a-zA-Z0-9]+$/,
     },
     director: {
         type: String,
-        required: true
+        required: true,
+        minLength: [5, 'Director should be at least 5 characters'],
+        match: /^[a-zA-Z0-9\s]+$/,
     },
     year: {
         type: Number,
         required: true,
         min: 1900,
-        max: 2050,
+        max: 2024,
     },
     rating: {
         type: Number,

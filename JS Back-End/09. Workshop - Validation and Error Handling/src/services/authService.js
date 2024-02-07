@@ -26,4 +26,11 @@ exports.login = async (email, password) => {
     return token;
 };
 
-exports.register = (userData) => User.create(userData);
+exports.register = (userData) => {
+    const user = user.findOne({ email: userData.email });
+    if (user) {
+        throw new Error('User already registered');
+    }
+
+    return User.create(userData);
+};
