@@ -2,6 +2,7 @@ const router = require('express').Router();
 const movieService = require('../services/movieService');
 const castService = require('../services/castService');
 const { isAuth } = require('../middlewares/authMiddleware');
+const { getErrorMessage } = require('../utils/errorUtils');
 
 router.get('/movie/create', isAuth, (req, res) => {
     res.render('create');
@@ -15,13 +16,14 @@ router.post('/movie/create', isAuth, async (req, res) => {
 
     try {
         await movieService.create(newMovie);
+        res.redirect('/');
     }
     catch (err) {
-        console.log(err.message);
-        res.redirect('/create');
+        const message = getErrorMessage(err);
+        res.status(400).render('create', { error: message, ...newMovie });
     }
 
-    res.redirect('/');
+
 });
 
 router.get('/details/:movieId', async (req, res) => {

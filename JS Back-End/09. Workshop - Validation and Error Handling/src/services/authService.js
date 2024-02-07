@@ -26,8 +26,8 @@ exports.login = async (email, password) => {
     return token;
 };
 
-exports.register = (userData) => {
-    const user = user.findOne({ email: userData.email });
+exports.register = async (userData) => {
+    const user = await User.findOne({ email: userData.email });
     if (user) {
         throw new Error('User already registered');
     }
