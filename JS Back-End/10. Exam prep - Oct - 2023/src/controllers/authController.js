@@ -1,5 +1,7 @@
 const router = require('express').Router();
 
+// TODO Double check each
+
 router.get('/register', (req, res) => {
     res.render('auth/register');
 });
