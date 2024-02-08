@@ -7,10 +7,10 @@ const configExpress = require('./config/configExpress');
 const app = express();
 const port = 3000;
 
-app.use(routes);
-
-configHandlebars(app);
 configExpress(app);
+configHandlebars(app);
+
+app.use(routes);
 
 //TODO Change name here
 mongoose.connect(`mongodb://localhost:27017/second-hand-electronics`)

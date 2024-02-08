@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
-const SECRET = require('../config/config');
+const jwt = require('../lib/jwt');
+const { SECRET } = require('../config/config');
 
 // TODO Double check each
 
@@ -20,8 +21,8 @@ exports.register = async (userData) => {
     return token;
 }
 
-exports.login = async (userData) => {
-    const user = await User.findOne({ email: userData.email });
+exports.login = async ({ email, password }) => {
+    const user = await User.findOne({ email });
     if (!user) {
         throw new Error('Email or password is invalid');
     };
