@@ -15,7 +15,6 @@ exports.auth = async (req, res, next) => {
 
         req.user = decodedToken;
         res.locals.isAuthenticated = true; // avtomatichno se chete ot handlebars
-
         next();
     }
     catch (err) {

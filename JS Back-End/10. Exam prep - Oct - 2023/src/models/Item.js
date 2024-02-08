@@ -33,8 +33,15 @@ const itemSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    buyingList: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-    owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    buyingList: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
 });
 
 const Item = mongoose.model('Item', itemSchema);
