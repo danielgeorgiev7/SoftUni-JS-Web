@@ -1,12 +1,27 @@
+const Item = require('../models/Item');
 const itemService = require('../services/itemService');
 const router = require('express').Router();
 
-router.get('/catalog', (req, res) => {
-    res.render('catalog');
+router.get('/catalog', async (req, res) => {
+    try {
+        const items = await Item.find().lean();
+        res.render('catalog', { items });
+    } catch (err) {
+        console.log(err);
+        res.render('/');
+    }
 });
 
-router.get('/catalog/details/:itemId', (req, res) => {
-    res.render('details');
+router.get('/catalog/details/:itemId', async (req, res) => {
+    try {
+        console.log(req.params);
+        const item = await Item.findById(req.params.itemId).lean();
+        const isOwner = item.owner == req.user._id;
+        res.render('details', { ...item, isOwner, });
+    } catch (err) {
+        console.log(err);
+        res.redirect('/catalog');
+    }
 });
 
 router.get('/catalog/create', (req, res) => {

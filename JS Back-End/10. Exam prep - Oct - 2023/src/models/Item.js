@@ -16,6 +16,7 @@ const itemSchema = new mongoose.Schema({
     image: {
         type: String,
         required: true,
+        match: /^https?:\/\//
     },
     description: {
         type: String,
