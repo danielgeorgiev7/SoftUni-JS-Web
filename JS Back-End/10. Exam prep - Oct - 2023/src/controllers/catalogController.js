@@ -14,11 +14,23 @@ router.get('/catalog', async (req, res) => {
 
 router.get('/catalog/details/:itemId', async (req, res) => {
     try {
-        console.log(req.params);
         const item = await Item.findById(req.params.itemId).lean();
+        const hasBought = item.buyingList.map((buyerId) => buyerId == req.user._id);
         const isOwner = item.owner == req.user._id;
-        res.render('details', { ...item, isOwner, });
+        res.render('details', { ...item, isOwner, hasBought });
     } catch (err) {
+        console.log(err);
+        res.redirect('/catalog');
+    }
+});
+
+router.get('/catalog/details/:itemId/buy', async (req, res) => {
+
+    try {
+        Item.findByIdAndUpdate(req.params.itemId, { $push: { buyingList: req.user._id } })
+            .then(res.redirect(`/catalog/details/${req.params.itemId}`));
+    }
+    catch (err) {
         console.log(err);
         res.redirect('/catalog');
     }

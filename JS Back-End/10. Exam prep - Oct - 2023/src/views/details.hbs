@@ -16,17 +16,17 @@
     <div class="buttons">
 
       {{#if isOwner}}
-      <a href="#" class="edit-btn">Edit</a>
-      <a href="#" class="delete-btn">Delete</a>
+        <a href="/catalog/details/{{_id}}/edit" class="edit-btn">Edit</a>
+        <a href="/catalog/details/{{_id}}/delete" class="delete-btn">Delete</a>
       {{else}}
-      <a href="#" class="buy-btn">Buy</a>
+        {{#if hasBought}}
+          <p><span class="buy">Thank You For Your Purchase</span></p>
+        {{else}}
+          <a href="/catalog/details/{{_id}}/buy" class="buy-btn">Buy</a>
+        {{/if}}
       {{/if}}
-      {{/if}}
+    {{/if}}
 
-
-
-      <!--If user is not the owner and is bought this toy-->
-      <p><span class="buy">Thank You For Your Purchase</span></p>
     </div>
   </div>
 </section>
