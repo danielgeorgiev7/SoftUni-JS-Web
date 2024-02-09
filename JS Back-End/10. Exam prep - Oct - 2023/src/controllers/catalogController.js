@@ -38,7 +38,28 @@ router.get('/catalog/details/:itemId/buy', async (req, res) => {
 
 
 router.get('/catalog/details/:itemId/edit', async (req, res) => {
-    // TODO 
+    try {
+        const item = await Item.findById(req.params.itemId);
+        res.render('edit', item);
+    }
+    catch (err) {
+        console.log(err);
+        res.redirect(`/catalog/details/${req.params.itemId}`);
+    }
+});
+
+router.post('/catalog/details/:itemId/edit', async (req, res) => {
+    try {
+        const item = await Item.findById(req.params.itemId);
+        if (req.user._id != item.owner) throw new Error('Unauthorized');
+        await item.updateOne(req.body)
+            .then(res.redirect(`/catalog/details/${req.params.itemId}`));
+    }
+    catch (err) {
+        console.log(err);
+        res.redirect(`/catalog/details/${req.params.itemId}`);
+
+    }
 });
 
 
