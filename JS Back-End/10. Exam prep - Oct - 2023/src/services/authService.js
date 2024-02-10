@@ -23,11 +23,17 @@ exports.register = async (userData) => {
 
 exports.login = async ({ email, password }) => {
     const user = await User.findOne({ email });
+
     if (!user) {
-        throw new Error('Email or password is invalid');
+        throw new Error('User field cannot be empty');
     };
 
-    const isValid = bcrypt.compare(password, user.password);
+    if (!password) {
+        throw new Error('Password field cannot be empty');
+    };
+
+    const isValid = await bcrypt.compare(password, user.password);
+
     if (!isValid) {
         throw new Error('Email or password is invalid');
     }
@@ -35,6 +41,7 @@ exports.login = async ({ email, password }) => {
     // Generate token
     const token = await generateToken(user);
     return token;
+
 };
 
 function generateToken(user) {

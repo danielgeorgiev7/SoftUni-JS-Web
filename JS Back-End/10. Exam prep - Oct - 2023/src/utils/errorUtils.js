@@ -5,8 +5,8 @@ exports.getErrorMessage = (err) => {
     if (err instanceof MongooseError) {
         message = Object.values(err.errors).at(0).message
     }
-    else if (err instanceof Error) {
-        err.message = message;
+    else {
+        message = err.message;
     }
     return message;
 };

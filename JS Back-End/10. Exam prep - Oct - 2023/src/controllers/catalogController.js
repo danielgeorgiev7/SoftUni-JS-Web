@@ -1,6 +1,7 @@
 const Item = require('../models/Item');
 const router = require('express').Router();
 const { userGuard, guestGuard } = require('../middlewares/guards');
+const { getErrorMessage } = require('../utils/errorUtils');
 
 router.get('/catalog', async (req, res) => {
     try {
@@ -51,13 +52,15 @@ router.post('/catalog/details/:itemId/edit', guestGuard, async (req, res) => {
     try {
         const item = await Item.findById(req.params.itemId);
         if (req.user._id != item.owner) throw new Error('Unauthorized');
-        await item.updateOne(req.body)
-            .then(res.redirect(`/catalog/details/${req.params.itemId}`));
+
+        Object.assign(item, req.body);
+
+        await item.save()
+        res.redirect(`/catalog/details/${req.params.itemId}`);
     }
     catch (err) {
-        console.log(err);
-        res.redirect(`/catalog/details/${req.params.itemId}`);
-
+        const message = getErrorMessage(err);
+        res.status(400).render('edit', { ...req.body, error: message });
     }
 });
 
@@ -92,8 +95,8 @@ router.post('/catalog/create', async (req, res) => {
         res.redirect('/catalog');
     }
     catch (err) {
-        console.log(err);
-        res.redirect('/catalog/create');
+        const message = getErrorMessage(err);
+        res.status(400).render('create', { ...req.body, error: message });
     }
 });
 
