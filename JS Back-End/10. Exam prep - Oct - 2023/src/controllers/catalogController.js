@@ -2,14 +2,16 @@ const Item = require('../models/Item');
 const router = require('express').Router();
 const { userGuard, guestGuard } = require('../middlewares/guards');
 const { getErrorMessage } = require('../utils/errorUtils');
+const searchService = require('../services/searchService');
+
 
 router.get('/catalog', async (req, res) => {
     try {
         const items = await Item.find().lean();
         res.render('catalog', { items });
     } catch (err) {
-        console.log(err);
-        res.render('/');
+        const message = getErrorMessage(err);
+        res.status(400).render('home', { error: message });
     }
 });
 
@@ -20,8 +22,8 @@ router.get('/catalog/details/:itemId', async (req, res) => {
         const isOwner = item.owner == req.user?._id;
         res.render('details', { ...item, isOwner, hasBought });
     } catch (err) {
-        console.log(err);
-        res.redirect('/catalog');
+        const message = getErrorMessage(err);
+        res.status(400).render('catalog', { error: message });
     }
 });
 
@@ -31,8 +33,8 @@ router.get('/catalog/details/:itemId/buy', guestGuard, async (req, res) => {
             .then(res.redirect(`/catalog/details/${req.params.itemId}`));
     }
     catch (err) {
-        console.log(err);
-        res.redirect('/catalog');
+        const message = getErrorMessage(err);
+        res.status(400).render('catalog', { error: message });
     }
 });
 
@@ -43,8 +45,8 @@ router.get('/catalog/details/:itemId/edit', guestGuard, async (req, res) => {
         res.render('edit', item);
     }
     catch (err) {
-        console.log(err);
-        res.redirect(`/catalog/details/${req.params.itemId}`);
+        const message = getErrorMessage(err);
+        res.status(400).render('catalog', { error: message });
     }
 });
 
@@ -75,8 +77,8 @@ router.get('/catalog/details/:itemId/delete', guestGuard, async (req, res) => {
             .then(res.redirect('/catalog'));
     }
     catch (err) {
-        console.log(err);
-        res.redirect(`/catalog/details/${req.params.itemId}`);
+        const message = getErrorMessage(err);
+        res.status(400).render('catalog', { error: message });
     }
 });
 
@@ -98,6 +100,12 @@ router.post('/catalog/create', async (req, res) => {
         const message = getErrorMessage(err);
         res.status(400).render('create', { ...req.body, error: message });
     }
+});
+
+router.get('/catalog/search', async (req, res) => {
+    const { name, type } = req.query;
+    const items = await searchService.search(name, type).lean();
+    res.render('search', { items, name, type });
 });
 
 module.exports = router;

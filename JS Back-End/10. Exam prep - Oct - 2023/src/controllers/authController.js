@@ -19,7 +19,6 @@ router.post('/register', userGuard, async (req, res) => {
         res.redirect('/');
     }
     catch (err) {
-        console.log(err);
         const message = getErrorMessage(err);
         res.status(400).render('auth/register', { error: message });
     }
