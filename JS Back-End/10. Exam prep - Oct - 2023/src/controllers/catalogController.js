@@ -1,6 +1,6 @@
 const Item = require('../models/Item');
-const itemService = require('../services/itemService');
 const router = require('express').Router();
+const { userGuard, guestGuard } = require('../middlewares/guards');
 
 router.get('/catalog', async (req, res) => {
     try {
@@ -15,8 +15,8 @@ router.get('/catalog', async (req, res) => {
 router.get('/catalog/details/:itemId', async (req, res) => {
     try {
         const item = await Item.findById(req.params.itemId).lean();
-        const hasBought = item.buyingList.map((buyerId) => buyerId == req.user._id);
-        const isOwner = item.owner == req.user._id;
+        const hasBought = item.buyingList.map((buyerId) => buyerId == req.user?._id);
+        const isOwner = item.owner == req.user?._id;
         res.render('details', { ...item, isOwner, hasBought });
     } catch (err) {
         console.log(err);
@@ -24,8 +24,7 @@ router.get('/catalog/details/:itemId', async (req, res) => {
     }
 });
 
-router.get('/catalog/details/:itemId/buy', async (req, res) => {
-
+router.get('/catalog/details/:itemId/buy', guestGuard, async (req, res) => {
     try {
         Item.findByIdAndUpdate(req.params.itemId, { $push: { buyingList: req.user._id } })
             .then(res.redirect(`/catalog/details/${req.params.itemId}`));
@@ -37,7 +36,7 @@ router.get('/catalog/details/:itemId/buy', async (req, res) => {
 });
 
 
-router.get('/catalog/details/:itemId/edit', async (req, res) => {
+router.get('/catalog/details/:itemId/edit', guestGuard, async (req, res) => {
     try {
         const item = await Item.findById(req.params.itemId);
         res.render('edit', item);
@@ -48,7 +47,7 @@ router.get('/catalog/details/:itemId/edit', async (req, res) => {
     }
 });
 
-router.post('/catalog/details/:itemId/edit', async (req, res) => {
+router.post('/catalog/details/:itemId/edit', guestGuard, async (req, res) => {
     try {
         const item = await Item.findById(req.params.itemId);
         if (req.user._id != item.owner) throw new Error('Unauthorized');
@@ -63,7 +62,7 @@ router.post('/catalog/details/:itemId/edit', async (req, res) => {
 });
 
 
-router.get('/catalog/details/:itemId/delete', async (req, res) => {
+router.get('/catalog/details/:itemId/delete', guestGuard, async (req, res) => {
     try {
         const item = await Item.findById(req.params.itemId);
 
@@ -78,7 +77,7 @@ router.get('/catalog/details/:itemId/delete', async (req, res) => {
     }
 });
 
-router.get('/catalog/create', (req, res) => {
+router.get('/catalog/create', guestGuard, (req, res) => {
     res.render('create');
 });
 
@@ -89,7 +88,7 @@ router.post('/catalog/create', async (req, res) => {
     };
 
     try {
-        await itemService.create(itemData);
+        await Item.create(itemData);
         res.redirect('/catalog');
     }
     catch (err) {
