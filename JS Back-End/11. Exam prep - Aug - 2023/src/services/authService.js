@@ -3,8 +3,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('../lib/jwt');
 const { SECRET } = require('../config/config');
 
-// TODO Double check each
-
 exports.register = async (userData) => {
     if (userData.password !== userData.rePassword) {
         throw new Error('Passwords do not match');
@@ -40,7 +38,8 @@ exports.login = async ({ email, password }) => {
 function generateToken(user) {
     const payload = {
         _id: user._id,
-        username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
     }
 

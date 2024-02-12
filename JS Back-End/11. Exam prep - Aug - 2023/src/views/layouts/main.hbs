@@ -9,12 +9,12 @@
 
   <body>
     <div id="box">
-      <!-- In case of error, you should display div with class "error-container" -->
-      <!-- You can choose to display the first error or all of them (error message/s in your opinion) -->
-      <!--
+
+      {{#if error}}
         <div class="error-container">
-            <p>Error</p>
-        </div>-->
+          <p>{{error}}</p>
+        </div>
+      {{/if}}
 
       <nav>
         <img src="/img/logo.png" alt="logo" />
