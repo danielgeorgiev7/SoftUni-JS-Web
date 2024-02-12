@@ -1,17 +1,18 @@
 const postsService = require('../services/postsService');
 const { getErrorMessage } = require('../utils/errorUtils');
+const { guestGuard } = require('../middlewares/guards');
 const router = require('express').Router();
 
 router.get('/all', async (req, res) => {
-    const creatures = await postsService.getAll();
-    res.render('posts/all-posts', { creatures });
+    const posts = await postsService.getAll();
+    res.render('posts/all-posts', { posts });
 });
 
-router.get('/create', (req, res) => {
+router.get('/create', guestGuard, (req, res) => {
     res.render('posts/create');
 });
 
-router.post('/create', async (req, res) => {
+router.post('/create', guestGuard, async (req, res) => {
     const data = {
         ...req.body,
         owner: req.user._id
@@ -29,37 +30,36 @@ router.post('/create', async (req, res) => {
 
 router.get('/details/:postId', async (req, res) => {
     try {
-        const creature = await postsService
+        const post = await postsService
             .getOne(req.params.postId,
                 { path: 'votes', select: 'email' },
                 { path: 'owner', select: 'firstName lastName' }
             );
-        const isOwner = creature.owner._id == req.user._id;
-        const ownerFullname = `${creature.owner.firstName} ${creature.owner.lastName}`
-        const hasVoted = creature.votes.filter((voter) => voter._id == req.user._id);
-        const votesCount = creature.votes.length;
-        const votersEmails = [];
-        creature.votes.map(voter => votersEmails.push(voter.email));
-        votersEmails.join(', ');
-        res.render('posts/details', { ...creature, isOwner, ownerFullname, hasVoted, votesCount, votersEmails });
+        const isOwner = post.owner._id == req.user?._id;
+        const ownerFullname = `${post.owner.firstName} ${post.owner.lastName}`
+        const hasVoted = post.votes.filter((voter) => voter._id == req.user?._id);
+        const votesCount = post.votes.length;
+        const votersEmailsArr = [];
+        post.votes.map(voter => votersEmailsArr.push(voter.email));
+        const votersEmails = votersEmailsArr.join(', ');
+        res.render('posts/details', { ...post, isOwner, ownerFullname, hasVoted, votesCount, votersEmails });
     }
     catch (err) {
-        //TODO render to /all when image validation is added
+        res.redirect('/posts/all');
     }
 });
 
-router.get('/edit/:postId', async (req, res) => {
-    const creature = await postsService.getOne(req.params.postId);
+router.get('/edit/:postId', guestGuard, async (req, res) => {
+    const post = await postsService.getOne(req.params.postId);
     try {
-        res.render('posts/edit', creature);
+        res.render('posts/edit', post);
     }
     catch (err) {
-        const message = getErrorMessage(err);
-        res.status(400).render('posts/all', { error: message, ...creature });
+        res.redirect('/posts/all');
     }
 });
 
-router.post('/edit/:postId', async (req, res) => {
+router.post('/edit/:postId', guestGuard, async (req, res) => {
     try {
         await postsService.updateOne(req.params.postId, req.body);
         res.redirect(`/posts/details/${req.params.postId}`);
@@ -70,19 +70,19 @@ router.post('/edit/:postId', async (req, res) => {
     }
 });
 
-router.get('/vote/:postId', async (req, res) => {
+router.get('/vote/:postId', guestGuard, async (req, res) => {
     try {
-        const creature = await postsService.updateOne(req.params.postId, { $push: { votes: req.user._id } })
+        await postsService.updateOne(req.params.postId, { $push: { votes: req.user._id } })
         res.redirect(`/posts/details/${req.params.postId}`);
     }
     catch (err) {
-        const message = getErrorMessage(err);
-        res.status(400).render('posts/details', { error: message, ...creature });
+        res.redirect('/posts/all');
+
     }
 });
 
 
-router.get('/delete/:postId', async (req, res) => {
+router.get('/delete/:postId', guestGuard, async (req, res) => {
     try {
         const post = await postsService.getOne(req.params.postId);
         if (post.owner._id != req.user._id) throw new Error('Unauthorized');

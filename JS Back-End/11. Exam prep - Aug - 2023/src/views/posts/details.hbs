@@ -12,18 +12,18 @@
 
         <p class="disc">{{description}}</p>
 
-        {{#if isAuthenticated}}
         <div class="social-btn">
-          {{#if isOwner}}
-          <a href="/posts/edit/{{_id}}" class="edit-btn">Edit</a>
-          <a href="/posts/delete/{{_id}}" class="del-btn">Delete</a>
-          {{else}}
-            {{#if hasVoted}}
-            <p class="thanks-for-vote">Thanks For Voting</p>
+          {{#if isAuthenticated}}
+            {{#if isOwner}}
+              <a href="/posts/edit/{{_id}}" class="edit-btn">Edit</a>
+              <a href="/posts/delete/{{_id}}" class="del-btn">Delete</a>
             {{else}}
-          <a href="/posts/vote/{{_id}}" class="vote-up">Vote</a>
+              {{#if hasVoted}}
+                <p class="thanks-for-vote">Thanks For Voting</p>
+              {{else}}
+                <a href="/posts/vote/{{_id}}" class="vote-up">Vote</a>
+              {{/if}}
             {{/if}}
-          {{/if}}
           {{/if}}
         </div>
       </div>
@@ -43,11 +43,11 @@
           <p class="PV">Total rating of votes: {{votesCount}}</p>
         </div>
         {{#if votersEmails}}
-         <p class="disc">People who voted for the post - {{votersEmails}}</p>
-         {{else}}
-        <p class="disc">
-          People who voted for the post - No one has voted yet.
-        </p>
+          <p class="disc">People who voted for the post - {{votersEmails}}</p>
+        {{else}}
+          <p class="disc">
+            People who voted for the post - No one has voted yet.
+          </p>
         {{/if}}
       </div>
     </div>
