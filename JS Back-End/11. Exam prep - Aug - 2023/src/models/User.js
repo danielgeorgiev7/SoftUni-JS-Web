@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
-//TODO Change parameters
-
 const userSchema = new mongoose.Schema({
-    username: {
+    firstName: {
+        type: String,
+        required: true
+    },
+    lastName: {
         type: String,
         required: true
     },
