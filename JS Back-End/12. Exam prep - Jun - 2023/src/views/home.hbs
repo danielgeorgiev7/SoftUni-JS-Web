@@ -12,12 +12,7 @@
 
 <section id="last-added">
   {{#each lastPosts}}
-    <div>
-      <img src="{{image}}" />
-      <p>Name: {{name}}</p>
-      <p>Need of: {{need}}</p>
-      <a class="details-btn" href="/animals/details/{{_id}}">Details</a>
-    </div>
+    {{>home-post-partial}}
   {{else}}
     <p class="no-post">There are no animals in need!</p>
   {{/each}}
