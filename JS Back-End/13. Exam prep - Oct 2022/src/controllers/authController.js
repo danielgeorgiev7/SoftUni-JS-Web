@@ -16,7 +16,6 @@ router.post('/register', async (req, res) => {
         res.redirect('/');
     }
     catch (err) {
-        console.log(err);
         const message = getErrorMessage(err);
         res.render('auth/register', { error: message })
     }
@@ -34,10 +33,8 @@ router.post('/login', async (req, res) => {
         res.redirect('/');
     }
     catch (err) {
-        console.log(err);
         const message = getErrorMessage(err);
         res.render('auth/register', { error: message })
-        res.redirect('/auth/login');
     }
 });
 

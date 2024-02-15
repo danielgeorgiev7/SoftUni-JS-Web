@@ -9,12 +9,13 @@
   </head>
 
   <body>
-
-    <div>
-      <div class="errorContainer">
-        <p>Error</p>
+    {{#if error}}
+      <div>
+        <div class="errorContainer">
+          <p>{{error}}</p>
+        </div>
       </div>
-    </div>
+    {{/if}}
 
     <div id="wrapper">
       <header>
