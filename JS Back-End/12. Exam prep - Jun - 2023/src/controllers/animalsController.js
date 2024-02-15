@@ -2,8 +2,9 @@ const router = require('express').Router();
 const postService = require('../services/postService');
 const { getErrorMessage } = require('../utils/errorUtils');
 
-router.get('/dashboard', (req, res) => {
-    res.render('animals/dashboard');
+router.get('/dashboard', async (req, res) => {
+    const posts = await postService.getAll().lean();
+    res.render('animals/dashboard', { posts });
 });
 
 router.get('/create', async (req, res) => {
