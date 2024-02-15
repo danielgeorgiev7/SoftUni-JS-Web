@@ -3,31 +3,42 @@ const mongoose = require('mongoose');
 const animalSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        minlength: 2
     },
     years: {
         type: Number,
-        required: true
+        required: true,
+        min: 1,
+        max: 100
     },
     kind: {
         type: String,
-        required: true
+        required: true,
+        minlength: 3
     },
     image: {
         type: String,
-        required: true
+        required: true,
+        match: /^https?:\/\//,
     },
     need: {
         type: String,
-        required: true
+        required: true,
+        minlength: 3,
+        maxlength: 20
     },
     location: {
         type: String,
-        required: true
+        required: true,
+        minlength: 5,
+        maxlength: 15
     },
     description: {
         type: String,
-        required: true
+        required: true,
+        minlength: 5,
+        maxlength: 50
     },
     donations: [{
         type: mongoose.Schema.Types.ObjectId,

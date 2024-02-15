@@ -8,4 +8,9 @@ router.use(homeController);
 router.use('/auth', authController);
 router.use('/animals', animalsController);
 
+router.get('*', async (req, res) => {
+    res.render('404');
+});
+
+
 module.exports = router;

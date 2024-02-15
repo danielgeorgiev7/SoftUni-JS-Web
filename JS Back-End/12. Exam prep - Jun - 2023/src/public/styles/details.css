@@ -11,9 +11,9 @@
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2), 0 3px 3px 0 rgba(0, 0, 0, 0.24);
 }
 
-#img-wrapper {
+/* #img-wrapper {
   max-width: 35%;
-}
+} */
 
 #img-wrapper img {
   width: 100%;
@@ -74,7 +74,7 @@ table td p span {
   flex-wrap: wrap;
   justify-content: center;
   margin-bottom: 15px;
-  margin-top:15px;
+  margin-top: 15px;
 }
 
 #action-buttons a {

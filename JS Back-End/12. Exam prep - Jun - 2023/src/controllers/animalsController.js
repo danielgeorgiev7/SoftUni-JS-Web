@@ -1,13 +1,15 @@
 const router = require('express').Router();
-const postService = require('../services/postService');
+const { guestGuard } = require('../middlewares/guards');
 const { getErrorMessage } = require('../utils/errorUtils');
+const postService = require('../services/postService');
+const searchService = require('../services/searchService');
 
 router.get('/dashboard', async (req, res) => {
     const posts = await postService.getAll().lean();
     res.render('animals/dashboard', { posts });
 });
 
-router.get('/create', async (req, res) => {
+router.get('/create', guestGuard, async (req, res) => {
     try {
         res.render('animals/create');
     }
@@ -18,14 +20,14 @@ router.get('/create', async (req, res) => {
     }
 });
 
-router.post('/create', async (req, res) => {
+router.post('/create', guestGuard, async (req, res) => {
     try {
         const data = {
             ...req.body,
             owner: req.user._id,
         }
-        await postService.create(data);
-        res.render('animals/dashboard');
+        await postService.create(data)
+        res.redirect('/create');
     }
     catch (err) {
         console.log(err);
@@ -47,7 +49,7 @@ router.get('/details/:postId', async (req, res) => {
     }
 });
 
-router.get('/edit/:postId', async (req, res) => {
+router.get('/edit/:postId', guestGuard, async (req, res) => {
     const post = await postService.getOne(req.params.postId).lean();
     try {
         res.render('animals/edit', post);
@@ -57,7 +59,7 @@ router.get('/edit/:postId', async (req, res) => {
     }
 });
 
-router.post('/edit/:postId', async (req, res) => {
+router.post('/edit/:postId', guestGuard, async (req, res) => {
     try {
         await postService.updateOne(req.params.postId, req.body);
         res.redirect(`/animals/details/${req.params.postId}`);
@@ -69,7 +71,7 @@ router.post('/edit/:postId', async (req, res) => {
     }
 });
 
-router.get('/donate/:postId', async (req, res) => {
+router.get('/donate/:postId', guestGuard, async (req, res) => {
     try {
         await postService.updateOne(req.params.postId, { $push: { donations: req.user._id } })
         res.redirect(`/animals/details/${req.params.postId}`);
@@ -80,7 +82,7 @@ router.get('/donate/:postId', async (req, res) => {
 });
 
 
-router.get('/delete/:postId', async (req, res) => {
+router.get('/delete/:postId', guestGuard, async (req, res) => {
     try {
         const post = await postService.getOne(req.params.postId);
         if (post.owner._id != req.user._id) throw new Error('Unauthorized');
@@ -94,8 +96,10 @@ router.get('/delete/:postId', async (req, res) => {
     }
 });
 
-router.get('/search', (req, res) => {
-    res.render('animals/search');
+router.get('/search', async (req, res) => {
+    const { location } = req.query;
+    const items = await searchService.search(location).lean();
+    res.render('animals/search', { items, location });
 });
 
 module.exports = router;

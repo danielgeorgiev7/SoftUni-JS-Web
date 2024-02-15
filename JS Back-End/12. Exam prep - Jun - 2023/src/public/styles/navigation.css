@@ -137,12 +137,12 @@ main #last-added div p {
   font-weight: bold;
 }
 
-.errorPage {
-  background-color: white;
-  background-size: cover;
-}
+/* .errorPage {
+} */
 
 #errorPage {
+  background-color: white;
+  background-size: cover;
   margin-bottom: 0px;
 }
 
