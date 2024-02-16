@@ -12,8 +12,7 @@ configHandlebars(app);
 
 app.use(routes);
 
-//TODO Change name here
-mongoose.connect(`mongodb://localhost:27017/second-hand-electronics`)
+mongoose.connect(`mongodb://localhost:27017/crypto-trade`)
     .then(() => {
         console.log('DB connection established');
 
