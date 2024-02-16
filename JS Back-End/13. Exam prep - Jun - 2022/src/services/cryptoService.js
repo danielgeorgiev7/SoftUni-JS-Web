@@ -4,7 +4,7 @@ exports.create = (data) => Crypto.create(data);
 
 exports.getAll = () => Crypto.find();
 
-exports.getOne = (postId, popOptions = '') => Crypto.findById(postId).populate(popOptions);
+exports.getOne = (postId) => Crypto.findById(postId);
 
 exports.updateOne = (postId, data) => Crypto.findByIdAndUpdate(postId, data, { runValidators: true });
 

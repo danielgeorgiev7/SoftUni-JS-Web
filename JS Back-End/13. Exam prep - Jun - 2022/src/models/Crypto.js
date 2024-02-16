@@ -20,7 +20,16 @@ const cryptoSchema = new mongoose.Schema({
     payment: {
         type: String,
         required: true,
-    }
+    },
+    buyerList: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
 });
 
 const Crypto = mongoose.model('Crypto', cryptoSchema);
