@@ -8,4 +8,8 @@ router.use(homeController);
 router.use('/auth', authController);
 router.use('/crypto', cryptoController);
 
+router.get('*', async (req, res) => {
+    res.render('404');
+});
+
 module.exports = router;

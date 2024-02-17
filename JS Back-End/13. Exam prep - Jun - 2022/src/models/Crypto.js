@@ -8,18 +8,22 @@ const cryptoSchema = new mongoose.Schema({
     price: {
         type: Number,
         required: true,
+        min: 0.01,
     },
     image: {
         type: String,
         required: true,
+        match: /^https?:\/\//,
     },
     description: {
         type: String,
         required: true,
+        minlength: 10,
     },
     payment: {
         type: String,
         required: true,
+        enum: ['crypto-wallet', 'credit-card', 'debit-card', 'paypal'],
     },
     buyerList: [{
         type: mongoose.Schema.Types.ObjectId,
