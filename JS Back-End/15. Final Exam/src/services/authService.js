@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('../lib/jwt');
 const { SECRET } = require('../config/config');
 
-// TODO Double check each
 
 exports.register = async (userData) => {
     if (userData.password !== userData.rePassword) {
@@ -27,12 +26,11 @@ exports.login = async ({ email, password }) => {
         throw new Error('Email or password is invalid');
     };
 
-    const isValid = bcrypt.compare(password, user.password);
+    const isValid = await bcrypt.compare(password, user.password);
     if (!isValid) {
         throw new Error('Email or password is invalid');
     }
 
-    // Generate token
     const token = await generateToken(user);
     return token;
 };
