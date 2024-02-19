@@ -21,14 +21,23 @@ exports.register = async (userData) => {
 }
 
 exports.login = async ({ email, password }) => {
+
+    if (!email) {
+        throw new Error('Email field is required.');
+    };
+
+    if (!password) {
+        throw new Error('Password field is required.');
+    };
+
     const user = await User.findOne({ email });
     if (!user) {
-        throw new Error('Email or password is invalid');
+        throw new Error('Email or password is invalid.');
     };
 
     const isValid = await bcrypt.compare(password, user.password);
     if (!isValid) {
-        throw new Error('Email or password is invalid');
+        throw new Error('Email or password is invalid.');
     }
 
     const token = await generateToken(user);

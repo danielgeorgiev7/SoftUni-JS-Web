@@ -18,7 +18,6 @@ exports.authMiddleware = async (req, res, next) => {
         next();
     }
     catch (err) {
-        // Catches if token is invalid or expired
         res.clearCookie('auth');
         res.redirect('auth/login');
     }
