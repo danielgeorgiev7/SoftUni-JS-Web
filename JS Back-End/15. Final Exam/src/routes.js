@@ -8,4 +8,8 @@ router.use(homeController);
 router.use('/auth', authController);
 router.use('/posts', postsController);
 
+router.get('*', async (req, res) => {
+    res.render('404');
+});
+
 module.exports = router;
