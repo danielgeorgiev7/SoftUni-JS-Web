@@ -14,6 +14,12 @@ export class UserService implements OnDestroy {
     // clear terminal, detach from events
   }
 
+  getUsers() {
+    return fetch('https://jsonplaceholder.typicode.com/users').then((res) =>
+      res.json()
+    );
+  }
+
   addUser(inputName: HTMLInputElement, inputAge: HTMLInputElement) {
     const user: User = {
       name: inputName.value,
