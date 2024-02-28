@@ -130,7 +130,6 @@ app-list-item {
 }
 
 .popup {
-  display: none;
   justify-content: center;
   align-items: center;
   flex-direction: column;

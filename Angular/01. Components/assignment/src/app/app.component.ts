@@ -14,16 +14,30 @@ import { TodoService } from './todo.service';
 export class AppComponent implements OnInit {
   titles: string[] = [];
   finished: string[] = [];
+  isEditable: string = '';
 
   constructor(private todoService: TodoService) {}
 
   ngOnInit(): void {
     this.titles = this.todoService.titles;
     this.finished = this.todoService.finished;
+    this.todoService.isEditable.subscribe((title: string) => {
+      this.isEditable = title;
+    });
   }
 
   onAdd(inputTitle: HTMLInputElement) {
     this.todoService.addTitle(inputTitle.value);
     inputTitle.value = '';
+  }
+
+  onUpdateEdit(inputEl: HTMLInputElement, isEditable: string) {
+    this.todoService.onUpdate(inputEl.value, isEditable);
+    this.titles = this.todoService.titles;
+    this.isEditable = '';
+  }
+
+  onCancelEdit() {
+    this.isEditable = '';
   }
 }

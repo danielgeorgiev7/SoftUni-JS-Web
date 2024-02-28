@@ -15,11 +15,15 @@ export class ListItemComponent {
     this.title = '';
   }
 
-  onFinish(title: string) {
+  onFinishClick(title: string) {
     this.todoService.onFinish(title);
   }
 
-  onRemove(title: string) {
+  onRemoveClick(title: string) {
     this.todoService.onRemove(title);
+  }
+
+  onEditClick(title: string) {
+    this.todoService.isEditable.emit(title);
   }
 }
