@@ -1,0 +1,41 @@
+<body class="innerBody">
+  <div class="todo">
+    <div class="header">
+      <h1>ToDo List</h1>
+      <input
+        type="text"
+        class="todo-input"
+        placeholder="Write your todo list here..."
+        #inputTitle
+      />
+      <button class="btn-add" (click)="onAdd(inputTitle)">Add</button>
+    </div>
+    <div class="todolist">
+      <h3>List of Works Todo:</h3>
+      <p class="error-info"></p>
+      <ul>
+        <li
+          data-id="test1"
+          *ngFor="let title of titles"
+          [ngClass]="{ completed: finished.includes(title) }"
+        >
+          <app-list-item [title]="title" />
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="popup">
+    <h3>Edit your todo:</h3>
+    <div class="popup-body">
+      <p class="popup-info"></p>
+      <input
+        type="text"
+        class="popup-input"
+        placeholder="Wprowadź nową treść zadania..."
+      />
+      <button class="popup-btn accept">Update</button>
+      <button class="popup-btn cancel">Cancel</button>
+    </div>
+  </div>
+</body>
