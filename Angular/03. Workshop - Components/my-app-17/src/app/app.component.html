@@ -1,0 +1,31 @@
+<div>{{ title }}</div>
+
+<ul>
+  @for (task of tasks; track task.id) {
+  <!-- @if(task.status === 'inProgress' ){
+  <li style="background-color: khaki">{{ task.name }} - {{ task.status }}</li>
+  } @else if (task.status === 'finished'){
+  <li style="background-color: lightgreen">
+    {{ task.name }} - {{ task.status }}
+  </li>
+  } @else if (task.status === 'todo'){
+  <li style="background-color: lightskyblue">
+    {{ task.name }} - {{ task.status }}
+  </li>
+  } -->
+  @switch(task.status){ @case('inProgress') {
+  <li style="background-color: khaki">{{ task.name }} - {{ task.status }}</li>
+  } @case('finished'){
+  <li style="background-color: lightgreen">
+    {{ task.name }} - {{ task.status }}
+  </li>
+  } @case('todo'){
+  <li style="background-color: lightskyblue">
+    {{ task.name }} - {{ task.status }}
+  </li>
+  } } } @empty {
+  <div>Sorry, this collection is empty</div>
+  }
+</ul>
+
+<router-outlet />
