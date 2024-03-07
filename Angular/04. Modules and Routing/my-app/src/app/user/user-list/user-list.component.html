@@ -1,0 +1,9 @@
+<p>user-list works!</p>
+
+<button (click)="fetchUsers()">Fetch Users</button>
+
+<div>
+  <ul>
+    <li *ngFor="let user of users">id: {{ user.id }}, name: {{ user.name }}</li>
+  </ul>
+</div>
