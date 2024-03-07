@@ -1,0 +1,21 @@
+.btns-wrapper {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.btn {
+  border: 1px solid navy;
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: skyblue;
+  color: navy;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.btn:hover {
+  background-color: khaki;
+  border: 1px solid brown;
+  color: brown;
+}
