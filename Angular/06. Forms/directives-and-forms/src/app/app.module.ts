@@ -9,6 +9,8 @@ import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { MyRouterLinkDirective } from './my-router-link.directive';
 import { MyStructuralDirective } from './my-structural.directive';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MaxCountDirective } from './max-count.directive';
 
 @NgModule({
   declarations: [
@@ -18,13 +20,16 @@ import { MyStructuralDirective } from './my-structural.directive';
     RegisterComponent,
     HomeComponent,
     MyRouterLinkDirective,
-    MyStructuralDirective
+    MyStructuralDirective,
+    MaxCountDirective,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule, // Template driven approach
+    ReactiveFormsModule, // Reactive driven approach
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

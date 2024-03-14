@@ -22,17 +22,27 @@
 
 <hr />
 
+<!-- Usage 1 -->
+
 <button (click)="toggle()">Toggle</button>
 
 <div *appMyStructural="isShown">Structural Directive - Usage 1</div>
+
+<!-- Usage 2 -->
 
 <ng-template
   [appMyStructural]="isShown"
   let-testMe="myCustomValue"
   let-myNumberche="myNum"
+  let-empty=""
+  #directiveRef="appMyStructural"
 >
   <div>Structural Directive - Usage 2</div>
-  <div>{{ testMe }} {{ myNumberche }}</div>
+  <div>{{ testMe }}</div>
+  <div>{{ myNumberche }}</div>
+  <div>{{ empty }}</div>
 </ng-template>
+
+<button (click)="simpleClick(directiveRef)">Simple Click</button>
 
 <hr />

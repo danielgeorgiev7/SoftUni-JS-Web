@@ -1,9 +1,7 @@
-import { NgClass } from '@angular/common';
 import {
   Directive,
   Input,
   OnChanges,
-  OnInit,
   SimpleChanges,
   TemplateRef,
   ViewContainerRef,
