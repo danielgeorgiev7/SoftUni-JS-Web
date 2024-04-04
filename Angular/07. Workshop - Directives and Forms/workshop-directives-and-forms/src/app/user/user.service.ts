@@ -21,13 +21,13 @@ export class UserService {
     }
   }
 
-  login(email: string, password: string) {
+  login() {
     this.user = {
       firstName: 'Dummy User',
       phoneNumber: '123-456-789',
       id: '5fa64c1f2183ce1728ff3723',
-      email,
-      password,
+      email: 'email@email.bg',
+      password: '123456',
     };
     localStorage.setItem(this.USER_KEY, JSON.stringify(this.user));
   }
